@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto Condensed', sans-serif;
+  background-color: #d7d7d7;
+}
+
+#page {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  background-color: #f6f6f6;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 25px;
+  width: clamp(300px, 60%, 500px);
+  display: grid;
+}
+
+h1 {
+  font-size: 2.5rem;
+  justify-self: center;
+}
+
+h2 {
+  font-size: 1rem;
+  justify-self: center;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  margin-top: 6px;
+}
+
+label {
+  font-size: 1.2rem;
+}
+
+input {
+  font: inherit;
+  padding: 4px;
+  border: solid 2px #d7d7d7;
+}
+
+.submit-btn {
+  justify-self: center;
+  border: 0;
+  background-color: #0067e5;
+  color: #f6f6f6;
+  font: inherit;
+  font-size: 1.15rem;
+  width: 40%;
+  padding: 10px;
+  margin-top: 12px;
+}
+
+.submit-btn:hover {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  cursor: pointer;
+}
+
+.required,
+.error-msg {
+  color: #d00000;
+}
+
+.error-msg {
+  font-size: smaller;
+}
+
+.hidden {
+  display: none;
+}
+
+.invalid {
+  border: #d00000 2px solid;
+}
+
+.valid {
+  border: #32c12a 2px solid;
+}
+
+input:focus {
+  outline: solid 2px #0067e5;
+  border: none;
+  padding: 6px;
+}
