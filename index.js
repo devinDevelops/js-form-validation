@@ -1,5 +1,5 @@
 const formEl = document.querySelector('form');
-// const emailEl = document.getElementById('email');
+
 // const countryEl = document.getElementById('country');
 // const passwordEl = document.getElementById('password');
 // const passwordConfirmEl = document.getElementById('password-confirm');
@@ -33,7 +33,23 @@ function setInputElInvalid(inputEl) {
   inputEl.classList.add('invalid');
 }
 
-// function checkEmail() {}
+function checkEmail() {
+  const emailEl = document.getElementById('email');
+  const emVal = emailEl.value.trim();
+  const re =
+    /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+  const isNotValidFormat = !re.test(emVal);
+
+  if (emVal.length === 0) {
+    setInputElInvalid(emailEl);
+    setErrorMsg(blankErrorMsg, emailEl);
+  } else if (isNotValidFormat) {
+    setInputElInvalid(emailEl);
+    setErrorMsg('Please format the email as "email@example.com"', emailEl);
+  } else {
+    setInputElValid(emailEl);
+  }
+}
 
 function checkZipCode() {
   const zcEl = document.getElementById('zip-code');
@@ -61,6 +77,7 @@ function checkZipCode() {
 formEl.addEventListener('submit', e => {
   e.preventDefault();
   // run each check here
+  checkEmail();
   checkZipCode();
   giveInvalidElFocus();
 });
