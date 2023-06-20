@@ -1,20 +1,27 @@
 const formEl = document.querySelector('form');
+const emailEl = document.getElementById('email');
+const zcEl = document.getElementById('zip-code');
+const countryEl = document.getElementById('country');
+const passwordEl = document.getElementById('password');
+const passwordConfirmEl = document.getElementById('password-confirm');
 
 const blankErrorMsg = 'This field is required. Please provide a value.';
+
+const resetForm = () => {
+  const inputEls = document.querySelectorAll('input');
+
+  inputEls.forEach(input => {
+    // eslint-disable-next-line no-param-reassign
+    input.value = '';
+    input.classList.remove('valid');
+  });
+};
 
 const getErrorMsgEl = inputEl =>
   document.querySelector(`#${inputEl.id} + .error-msg`);
 
 function setErrorMsg(msg, inputEl) {
   getErrorMsgEl(inputEl).textContent = msg;
-}
-
-function giveInvalidElFocus() {
-  const invalidInput = document.querySelector('input[class="invalid"]');
-
-  if (invalidInput === null) return;
-
-  invalidInput.focus();
 }
 
 function setInputElValid(inputEl) {
@@ -30,7 +37,6 @@ function setInputElInvalid(inputEl) {
 }
 
 function checkEmail() {
-  const emailEl = document.getElementById('email');
   const emVal = emailEl.value.trim();
   const re =
     /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
@@ -48,7 +54,6 @@ function checkEmail() {
 }
 
 function checkZipCode() {
-  const zcEl = document.getElementById('zip-code');
   const zcVal = zcEl.value.trim();
   const re = /^\d{5}$/gm;
   const isNotValidFormat = !re.test(zcVal);
@@ -65,9 +70,8 @@ function checkZipCode() {
 }
 
 function checkCountry() {
-  const countryEl = document.getElementById('country');
   const countryVal = countryEl.value.trim();
-  const re = /^[a-zA-Z ]*$/; // find a new re
+  const re = /^[a-zA-Z ]*$/;
   const isNotValidFormat = !re.test(countryVal);
   const isTooShort = countryVal.length < 2;
 
@@ -86,7 +90,6 @@ function checkCountry() {
 }
 
 function checkPassword() {
-  const passwordEl = document.getElementById('password');
   const pwVal = passwordEl.value.trim();
   const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
   const isNotValidFormat = !re.test(pwVal);
@@ -106,8 +109,6 @@ function checkPassword() {
 }
 
 function checkPasswordCofirm() {
-  const passwordEl = document.getElementById('password');
-  const passwordConfirmEl = document.getElementById('password-confirm');
   const pwVal = passwordEl.value.trim();
   const pwcVal = passwordConfirmEl.value.trim();
   const pwsDontMatch = pwVal !== pwcVal;
@@ -126,13 +127,21 @@ function checkPasswordCofirm() {
   }
 }
 
+emailEl.addEventListener('focusout', checkEmail);
+countryEl.addEventListener('focusout', checkCountry);
+zcEl.addEventListener('focusout', checkZipCode);
+passwordEl.addEventListener('focusout', checkPassword);
+passwordConfirmEl.addEventListener('focusout', checkPasswordCofirm);
+
 formEl.addEventListener('submit', e => {
+  const invalidEl = document.querySelector('input[class="invalid"]');
+
   e.preventDefault();
-  // run each check here
-  checkEmail();
-  checkCountry();
-  checkZipCode();
-  checkPassword();
-  checkPasswordCofirm();
-  giveInvalidElFocus();
+
+  if (invalidEl === null) {
+    resetForm();
+    alert(`🥳 Form submitted 🥳`);
+  } else {
+    invalidEl.focus();
+  }
 });
