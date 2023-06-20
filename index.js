@@ -1,7 +1,5 @@
 const formEl = document.querySelector('form');
 
-// const passwordConfirmEl = document.getElementById('password-confirm');
-
 const blankErrorMsg = 'This field is required. Please provide a value.';
 
 const getErrorMsgEl = inputEl =>
@@ -107,7 +105,26 @@ function checkPassword() {
   }
 }
 
-// function checkPasswordCofirm() {}
+function checkPasswordCofirm() {
+  const passwordEl = document.getElementById('password');
+  const passwordConfirmEl = document.getElementById('password-confirm');
+  const pwVal = passwordEl.value.trim();
+  const pwcVal = passwordConfirmEl.value.trim();
+  const pwsDontMatch = pwVal !== pwcVal;
+
+  if (pwcVal.length === 0) {
+    setInputElInvalid(passwordConfirmEl);
+    setErrorMsg(blankErrorMsg, passwordConfirmEl);
+  } else if (pwsDontMatch) {
+    setInputElInvalid(passwordConfirmEl);
+    setErrorMsg(
+      'Passwords do not match. Please check again.',
+      passwordConfirmEl
+    );
+  } else {
+    setInputElValid(passwordConfirmEl);
+  }
+}
 
 formEl.addEventListener('submit', e => {
   e.preventDefault();
@@ -116,5 +133,6 @@ formEl.addEventListener('submit', e => {
   checkCountry();
   checkZipCode();
   checkPassword();
+  checkPasswordCofirm();
   giveInvalidElFocus();
 });
