@@ -1,6 +1,5 @@
 const formEl = document.querySelector('form');
 
-// const passwordEl = document.getElementById('password');
 // const passwordConfirmEl = document.getElementById('password-confirm');
 
 const blankErrorMsg = 'This field is required. Please provide a value.';
@@ -88,9 +87,25 @@ function checkCountry() {
   }
 }
 
-// function checkPassword() {
-//   const re =
-// }
+function checkPassword() {
+  const passwordEl = document.getElementById('password');
+  const pwVal = passwordEl.value.trim();
+  const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
+  const isNotValidFormat = !re.test(pwVal);
+
+  if (pwVal.length === 0) {
+    setInputElInvalid(passwordEl);
+    setErrorMsg(blankErrorMsg, passwordEl);
+  } else if (isNotValidFormat) {
+    setInputElInvalid(passwordEl);
+    setErrorMsg(
+      'Please use a minimum of 8 characters, with at least 1 uppercase character, 1 lowercase character, and 1 number. Ex. "Password1"',
+      passwordEl
+    );
+  } else {
+    setInputElValid(passwordEl);
+  }
+}
 
 // function checkPasswordCofirm() {}
 
@@ -100,5 +115,6 @@ formEl.addEventListener('submit', e => {
   checkEmail();
   checkCountry();
   checkZipCode();
+  checkPassword();
   giveInvalidElFocus();
 });
