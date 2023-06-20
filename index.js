@@ -1,6 +1,5 @@
 const formEl = document.querySelector('form');
 
-// const countryEl = document.getElementById('country');
 // const passwordEl = document.getElementById('password');
 // const passwordConfirmEl = document.getElementById('password-confirm');
 
@@ -68,9 +67,30 @@ function checkZipCode() {
   }
 }
 
-// function checkCountry() {}
+function checkCountry() {
+  const countryEl = document.getElementById('country');
+  const countryVal = countryEl.value.trim();
+  const re = /^[a-zA-Z ]*$/; // find a new re
+  const isNotValidFormat = !re.test(countryVal);
+  const isTooShort = countryVal.length < 2;
 
-// function checkPassword() {}
+  if (countryVal.length === 0) {
+    setInputElInvalid(countryEl);
+    setErrorMsg(blankErrorMsg, countryEl);
+  } else if (isNotValidFormat || isTooShort) {
+    setInputElInvalid(countryEl);
+    setErrorMsg(
+      'Please enter at least 2 characters. No numbers or special characters.',
+      countryEl
+    );
+  } else {
+    setInputElValid(countryEl);
+  }
+}
+
+// function checkPassword() {
+//   const re =
+// }
 
 // function checkPasswordCofirm() {}
 
@@ -78,6 +98,7 @@ formEl.addEventListener('submit', e => {
   e.preventDefault();
   // run each check here
   checkEmail();
+  checkCountry();
   checkZipCode();
   giveInvalidElFocus();
 });
